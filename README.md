@@ -23,4 +23,4 @@ This repository constains the following files:
 | -------------- | --------------------- |
 |[AUTHORS](AUTHORS) | Contains info about authors of the project |
 |[console.py](console.py) | creates object, retrieves object from file, does operations on objects, updates attributes of object and destroys object |
-
+|[models/engine/file_storage.py](file_storage.py) | Serializes instances to a JSON file and deserializes JSON file to instances |
