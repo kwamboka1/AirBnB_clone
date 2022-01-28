@@ -21,6 +21,6 @@ This repository constains the following files:
 
 |   **File**   |   **Description**   |
 | -------------- | --------------------- |
-|[AUTHORS](./AUTHORS) | Contains info about authors of the project |
-|[console.py](./console.py) | creates object, retrieves object from file, does operations on objects, updates attributes of object and destroys object |
+|[AUTHORS](AUTHORS) | Contains info about authors of the project |
+|[console.py](console.py) | creates object, retrieves object from file, does operations on objects, updates attributes of object and destroys object |
 
