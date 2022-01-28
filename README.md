@@ -1,4 +1,4 @@
-# 0x00. AirBnB Clone [![License: MIT](https://github.com/kwamboka1/AirBnB_clone/blob/master/LICENSE)
+# 0x00. AirBnB Clone [License: MIT](https://github.com/kwamboka1/AirBnB_clone/blob/master/LICENSE)
 ![HBnB logo](./image/hbnb_logo.png)
 
 ### Contents
