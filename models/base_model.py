@@ -4,6 +4,7 @@ This is a Parent class that will be inherited
 """
 import uuid
 from datetime import datetime
+from models import storage
 
 """
 class BaseModel that defines all common attributes/methods for other classes
