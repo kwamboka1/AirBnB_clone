@@ -2,11 +2,8 @@
 """ Module of Unittests """
 
 import unittest
-from base_model import BaseModel
-import os
-from models import storage
-from models.engine.file_storage import FileStorage
 import datetime
+from models.base_model import BaseModel
 
 
 class BaseModelTests(unittest.TestCase):
