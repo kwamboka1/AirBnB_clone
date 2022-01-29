@@ -2,7 +2,7 @@
 """ Module of Unittests """
 
 import unittest
-from models.base_model import BaseModel
+from base_model import BaseModel
 import os
 from models import storage
 from models.engine.file_storage import FileStorage
