@@ -4,7 +4,6 @@ This is a Parent class that will be inherited
 """
 import uuid
 from datetime import datetime
-from models import storage
 
 """
 class BaseModel that defines all common attributes/methods for other classes
@@ -33,7 +32,7 @@ class BaseModel:
         """
         Returns:
         -class name
-        -id and 
+        -id and
         -attribute dictionary
         """
         class_name = "[" + self.__class__.__name__ + "]"
@@ -42,7 +41,8 @@ class BaseModel:
 
     def save(self):
         """
-            updates the public instance attribute 'updated_at' with the current datetime
+            updates the public instance attribute 'updated_at'
+            with the current datetime
 
         """
         self.updated_at = datetime.now()
@@ -50,7 +50,8 @@ class BaseModel:
 
     def to_dict(self):
         """
-            returns a dictionary containing all keys/values of '__dict__' of the instance
+            returns a dictionary containing all keys/values of '__dict__'
+            of the instance
         """
         new_dict = {}
 
