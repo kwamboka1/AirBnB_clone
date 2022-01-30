@@ -22,12 +22,12 @@ class BaseModel:
         self.updated_at = datetime.today()
 
         if len(kwargs) != 0:
-            f = "%Y-%m-%dT%H:%M:%S.%f"
             for key, value in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
-                    value = datetime.strptime(kwargs[key], f)
-                if key != '__class__':
-                    setattr(self, key, value)
+                    f = "%Y-%m-%dT%H:%M:%S.%f"
+                    self.__dict__[key] = datetime.strptime(value, f)
+                else:
+                    self.__dict__[key] = value
         else:
             models.storage.new(self)
 
