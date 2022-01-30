@@ -1,98 +1,178 @@
 #!/usr/bin/python3
-"""contains the entry point of command interpreter"""
+""" Entry point of the command interpreter """
 import cmd
 from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.city import City
+from models.amenity import Amenity
+from models.state import State
+from models.review import Review
+import json
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
-    """Command interpreter to interact with storage"""
-    prompt = '(hbnb) '
+    """Command processor"""
 
-    def do_quit(self, arg):
-        """Quit command to exit the program"""
-        return True
+    prompt = "(hbnb) "
+    l_classes = ['BaseModel', 'User', 'Amenity',
+                 'Place', 'City', 'State', 'Review']
 
-    def do_EOF(self, arg):
-        """EOF command to exit the program"""
-        return True
+    l_c = ['create', 'show', 'update', 'all', 'destroy', 'count']
 
-    def do_create(self, arg):
-        """Create new instance of class, saves it and prints the id"""
-        args = arg.split()
-        if self.validate_arg(args, False, False):
-            obj = storage.classes()[args[0]]()
-            obj.save()
-            print(obj.id)
+    def precmd(self, arg):
+        """parses command input"""
+        if '.' in arg and '(' in arg and ')' in arg:
+            cls = arg.split('.')
+            cnd = cls[1].split('(')
+            args = cnd[1].split(')')
+            if cls[0] in HBNBCommand.l_classes and cnd[0] in HBNBCommand.l_c:
+                arg = cnd[0] + ' ' + cls[0] + ' ' + args[0]
+        return arg
+
+    def help_help(self):
+        """ Prints help command description """
+        print("Provides description of a given command")
+
+    def emptyline(self):
+        """do nothing when empty line"""
+        pass
+
+    def do_count(self, cls_name):
+        """counts number of instances of a class"""
+        count = 0
+        all_objs = storage.all()
+        for k, v in all_objs.items():
+            clss = k.split('.')
+            if clss[0] == cls_name:
+                count = count + 1
+        print(count)
+
+    def do_create(self, type_model):
+        """ Creates an instance according to a given class """
+
+        if not type_model:
+            print("** class name missing **")
+        elif type_model not in HBNBCommand.l_classes:
+            print("** class doesn't exist **")
+        else:
+            dct = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
+                   'City': City, 'Amenity': Amenity, 'State': State,
+                   'Review': Review}
+            my_model = dct[type_model]()
+            print(my_model.id)
+            my_model.save()
 
     def do_show(self, arg):
-        """Show prints the string repr of an instance based on the class name
-        and id"""
-        args = arg.split()
-        if self.validate_arg(args):
-            key = args[0] + "." + args[1]
-            print(storage.all()[key])
+        """ Shows string representation of an instance passed """
+
+        if not arg:
+            print("** class name missing **")
+            return
+
+        args = arg.split(' ')
+
+        if args[0] not in HBNBCommand.l_classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            all_objs = storage.all()
+            for key, value in all_objs.items():
+                ob_name = value.__class__.__name__
+                ob_id = value.id
+                if ob_name == args[0] and ob_id == args[1].strip('"'):
+                    print(value)
+                    return
+            print("** no instance found **")
 
     def do_destroy(self, arg):
-        """Destroy deletes an instance based on the class name and id"""
-        args = arg.split()
-        if self.validate_arg(args):
-            key = args[0] + "." + args[1]
-            del storage.all()[key]
-            storage.save()
+        """ Deletes an instance passed """
+
+        if not arg:
+            print("** class name missing **")
+            return
+
+        args = arg.split(' ')
+
+        if args[0] not in HBNBCommand.l_classes:
+            print("** class doesn't exist **")
+        elif len(args) == 1:
+            print("** instance id missing **")
+        else:
+            all_objs = storage.all()
+            for key, value in all_objs.items():
+                ob_name = value.__class__.__name__
+                ob_id = value.id
+                if ob_name == args[0] and ob_id == args[1].strip('"'):
+                    del value
+                    del storage._FileStorage__objects[key]
+                    storage.save()
+                    return
+            print("** no instance found **")
 
     def do_all(self, arg):
-        """All prints all string repr of all instances based or not on the
-        class name"""
-        args = arg.split()
-        if len(args) == 0:
-            print([str(v) for k, v in storage.all().items()])
+        """ Prints string represention of all instances of a given class """
+
+        if not arg:
+            print("** class name missing **")
+            return
+
+        args = arg.split(' ')
+
+        if args[0] not in HBNBCommand.l_classes:
+            print("** class doesn't exist **")
         else:
-            if args[0] not in storage.classes():
-                print("** class doesn't exist **")
-            else:
-                print([str(v) for k, v in storage.all().items()
-                       if type(v).__name__ == args[0]])
+            all_objs = storage.all()
+            list_instances = []
+            for key, value in all_objs.items():
+                ob_name = value.__class__.__name__
+                if ob_name == args[0]:
+                    list_instances += [value.__str__()]
+            print(list_instances)
 
     def do_update(self, arg):
-        """Update updates an instance based on the class name and
-        id by adding or updating attributes"""
-        args = arg.split()
-        if self.validate_arg(args):
-            if len(args) < 3:
-                print("** attribute name missing **")
-                return
-            if len(args) < 4:
-                print("** value missing **")
-                return
-            key = args[0] + '.' + args[1]
-            obj = storage.all()[key]
-            if args[3].isdigit():
-                args[3] = float(args[3])
-                args[3] = int(args[3]) if args[3].is_integer() else args[3]
-            else:
-                if args[3].startswith('"'):
-                    args[3] = arg.partition('"')[2].rpartition('"')[0]
-            setattr(obj, str(args[2]), args[3])
-            storage.save()
+        """ Updates an instance based on the class name and id """
 
-    def validate_arg(self, args, validate_id=True, check_existence=True):
-        if len(args) < 1:
+        if not arg:
             print("** class name missing **")
-            return False
-        if args[0] not in storage.classes():
+            return
+
+        a = ""
+        for argv in arg.split(','):
+            a = a + argv
+
+        args = shlex.split(a)
+
+        if args[0] not in HBNBCommand.l_classes:
             print("** class doesn't exist **")
-            return False
-        if len(args) < 2 and validate_id:
+        elif len(args) == 1:
             print("** instance id missing **")
-            return False
-        if check_existence and args[0] + "." + args[1] not in storage.all():
+        else:
+            all_objs = storage.all()
+            for key, objc in all_objs.items():
+                ob_name = objc.__class__.__name__
+                ob_id = objc.id
+                if ob_name == args[0] and ob_id == args[1].strip('"'):
+                    if len(args) == 2:
+                        print("** attribute name missing **")
+                    elif len(args) == 3:
+                        print("** value missing **")
+                    else:
+                        setattr(objc, args[2], args[3])
+                        storage.save()
+                    return
             print("** no instance found **")
-            return False
+
+    def do_quit(self, line):
+        """ Quit command to exit the command interpreter """
         return True
 
-    def emptyline(self) -> bool:
-        """called when an empty line is entered"""
-        pass
+    def do_EOF(self, line):
+        """ EOF command to exit the command interpreter """
+        return True
 
 
 if __name__ == '__main__':
