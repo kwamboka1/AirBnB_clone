@@ -12,7 +12,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-class_list = {"BaseModel": BaseModel,
+c_list = {"BaseModel": BaseModel,
               "User": User,
               "State": State,
               "City": City,
@@ -20,9 +20,9 @@ class_list = {"BaseModel": BaseModel,
               "Place": Place,
               "Review": Review
               }
-white_list = []
-for key in class_list:
-    white_list.append(key)
+new_c_list = []
+for key in c_list:
+    new_c_list.append(key)
 commands = ["do_show",
             "do_destroy",
             "do_all",
@@ -52,10 +52,10 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in white_list:
+        elif args[0] not in new_c_list:
             print("** class doesn't exist **")
         else:
-            for key, value in class_list.items():
+            for key, value in c_list.items():
                 if args[0] == key:
                     new_instance = value()
                     print(new_instance.id)
@@ -68,7 +68,7 @@ class HBNBCommand(cmd.Cmd):
         objects_dic = storage.all()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in white_list:
+        elif args[0] not in new_c_list:
             print("** class doesn't exist **")
         elif len(args) != 2:
             print("** instance id missing **")
