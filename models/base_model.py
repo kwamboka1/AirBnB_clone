@@ -2,7 +2,7 @@
 """
 This is a Parent class that will be inherited
 """
-import models
+import models import storage
 import uuid
 from datetime import datetime
 
