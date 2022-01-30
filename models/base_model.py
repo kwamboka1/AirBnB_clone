@@ -36,9 +36,8 @@ class BaseModel:
         -id and
         -attribute dictionary
         """
-        class_name = "[" + self.__class__.__name__ + "]"
-        dct = {k: v for (k, v) in self.__dict__.items() if (not v) is False}
-        return class_name + " (" + self.id + ") " + str(dct)
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
         """
