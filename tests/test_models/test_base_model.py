@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """ Module of Unittests """
-
-import datetime
+import os
 import unittest
+import datetime
 from models.base_model import BaseModel
 import os
 from models import storage
