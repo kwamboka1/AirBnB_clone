@@ -55,16 +55,8 @@ class BaseModel:
             returns a dictionary containing all keys/values of '__dict__'
             of the instance
         """
-        new_dict = {}
-
-        for key, values in self.__dict__.items():
-            if key == "created_at" or key == "updated_at":
-                new_dict[key] = values.strftime("%Y-%m-%dT%H:%M:%S.%f")
-            else:
-                if not values:
-                    pass
-                else:
-                    new_dict[key] = values
-        new_dict['__class__'] = self.__class__.__name__
-
-        return new_dict
+        converted = self.__dict__.copy()
+        converted["created_at"] = self.created_at.isoformat()
+        converted["updated_at"] = self.updated_at.isoformat()
+        converted["__class__"] = self.__class__.__name__
+        return (converted)
