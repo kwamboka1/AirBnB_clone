@@ -118,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         objects_dic = storage.all()
         if len(args) == 0:
             print("** class name missing **")
-        elif args[0] not in new_list:
+        elif args[0] not in new_c_list:
             print("** class doesn't exist **")
         elif len(args) < 2:
             print("** instance id missing **")
