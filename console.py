@@ -103,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
             for key in objects_dic:
                 objects_list.append(objects_dic[key].__str__())
             print(objects_list)
-        elif args[0] in white_list:
+        elif args[0] in new_c_list:
             for key in objects_dic:
                 if objects_dic[key].__class__.__name__ == args[0]:
                     objects_list.append(objects_dic[key].__str__())
