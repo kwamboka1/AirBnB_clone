@@ -1,19 +1,18 @@
 /* ********************************************************************
  *                      body styling
  * *******************************************************************/
-html, body{
-        padding:0;
-        margin:0;
+body{
+    padding:0;
+    margin:0;
 	font-color:#484848;
 	font-size:14px;
 	font-family:Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
-html{
-	position: relative;
-}
+
 /* ********************************************************************
  *                      div container styling
  * *******************************************************************/
+
 .container{
 	max-width:1000px;
 	margin:30px auto;
