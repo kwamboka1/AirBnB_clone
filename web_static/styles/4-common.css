@@ -1,20 +1,33 @@
-/* ********************************************************************
- *                      body styling
- * *******************************************************************/
-body{
-    padding:0;
-    margin:0;
-	font-color:#484848;
-	font-size:14px;
-	font-family:Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+/********************************************
+*           body styling
+*********************************************/
+html, body {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
 }
 
-/* ********************************************************************
- *                      div container styling
- * *******************************************************************/
-
-.container{
-	max-width:1000px;
-	margin:30px auto;
-
+html {
+  position: relative;
 }
+
+body {
+    color: #484848;
+    font-size: 14px;
+    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/***********************************
+*         Div container styling
+***********************************/
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+
