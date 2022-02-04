@@ -1,12 +1,15 @@
 /* ********************************************************************
  *                      body styling
  * *******************************************************************/
-body{
+html, body{
         padding:0;
         margin:0;
 	font-color:#484848;
 	font-size:14px;
 	font-family:Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+html{
+	position: relative;
 }
 /* ********************************************************************
  *                      div container styling
