@@ -169,7 +169,7 @@ section.places .reviews ul li p {
  /********************************
  Align content as screen gets smaller 
  *********************************/
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 800px) {
   .places h1 {
     width: 95%;
     color: #FF5A5F;
