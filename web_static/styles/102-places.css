@@ -170,17 +170,16 @@ section.places .reviews ul li p {
  Align content as screen gets smaller 
  *********************************/
 @media only screen and (max-width: 800px) {
-  .places h1 {
+    .places h1 {
     width: 95%;
     color: #FF5A5F;
     text-decoration: underline;
   }
-  footer{
+    footer{
     background-color: black;
     color: #FFFF;
   }
-  .filters{
+    .filters{
     background-color: #C0C0C0;
-
   }
 }
